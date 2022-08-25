@@ -1,0 +1,52 @@
+{% extends 'index.html' %}
+{% load static %}
+
+
+{% block title %}Новости{% endblock %}
+
+{% block header%}
+  <div class="header_edit">
+    <a href="{% url 'post_new' %}">Написать статью</a>
+  </div>
+{% endblock header%}
+
+{% block content %}  
+<div class="container-fluid text-center">
+
+  <span class="step-links">
+      {% for post in object_list %}
+        <div class="posts">
+        <p style="text-align:right; color: rgb(175, 175, 175);">{% if user.is_authenticated %}Опубликовано {{post.author}}{% endif %} {{post.date_modified}}</p>
+        {% if post.image %}
+        <div class="posts_image">
+          <img src={{ post.image.url }}>
+        </div>
+        {% endif %}
+        <div class="posts_title">
+          <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+        </div>
+        <p>{{ post.thesis }}</p>
+      {% endfor %}
+
+
+      <div class="steps">
+      {% if page_obj.has_previous %}
+      <a href="?page=1">&laquo; Первая</a>
+      <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+      {% endif %}
+      <span class="current">
+      Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Далее</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+      {% endif %}
+      </div>
+  </span>
+
+</div>
+
+{% endblock content %}
+
+

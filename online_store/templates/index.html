@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Маркет{% endblock %}</title>
+    <script type="text/javascript" href="{%static 'jquery.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{%static 'bootstrap-5.2.0/css/bootstrap.min.css' %}">  
+
+    <script type="text/javascript" href="{%static 'jquery.js' %}"></script>
+    <script type="text/javascript" href="{%static 'bootstrap-5.2.0/js/bootstrap.min.js' %}"></script>
+  </head>
+  
+  <body class="d-flex flex-column h-100">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">Маркет</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <div class="d-none d-none d-sm-block d-md-none">
+            <form class="d-flex" role="search" style="margin: 15px">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+          <li class="nav-item">
+            <a class="nav-link" href="/catalog">Каталог</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Новости</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/cart/shipping">Доставка</a>
+          </li>
+          <li class="nav-item">
+            {% with total_items=cart|length %}
+            {% if cart|length > 0 %}
+            <a class="nav-link" href="{% url "cart:cart_detail" %}">
+              Корзина: {{ total_items }} товар{{ total_items|pluralize }}, {{ cart.get_total_price }} ₽</a>
+          </li> 
+          <li class="nav-item">
+            {% else %}
+            <a class="nav-link">Корзина пуста</a>
+            {% endif %}
+            {% endwith %}
+            {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account' %}">Профиль</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+          </li>
+            {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="/account/login">Войти</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div> 
+    </nav>
+
+    <hr class="border border-danger border-2 opacity-50">
+    
+    <main class="flex-shrink-0">
+      {% if user.is_staff %}
+      <div class="header">
+        {% block header%}
+        {% endblock header%}
+      </div>
+      {% endif %}
+      <div class="container">
+
+        {% block content %}
+        <div class="jumbotron jumbotron-fluid" style="margin: 15%">
+          <div class="container text-center">
+            <h1>Привет! Это магазин микрокомпьютеров и радиоэлектроники </h1>
+            <p>Воспользуюся поиском или перейди в каталог для поиска товаров </p>
+
+            <form class="d-flex" role="search" action="{% url 'search_results' %}" method="get" style="margin: 10px">
+              <input name="q" class="form-control me-2" type="search" placeholder="Я ищу...">
+              <button class="btn btn-outline-success" type="submit">Поиск</button>
+            </form>
+          </div>
+        </div>
+        <hr class="border border-light">
+
+        {% endblock content %}
+
+      </div>
+    </main>
+
+          <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

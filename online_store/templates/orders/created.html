@@ -1,0 +1,11 @@
+{% extends 'index.html' %}
+{% load static %}
+
+
+{% block title %}Спасибо{% endblock %}
+
+{% block content %}
+    <h1>Спасибо</h1>
+    <p>Ваш заказ создан <strong>{{ order.id }}</strong>.</p>
+    <p>В течении часа с вами свяжется менеджер по email для уточнения способа доставки</p>
+{% endblock %}

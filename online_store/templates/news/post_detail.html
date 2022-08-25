@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block header%}
+
+<div class="header_edit">
+  <a href='{% url 'post_edit' post.pk %}'>Редактировать статью</a>
+  <a href='{% url 'post_delete' post.pk %}'>Удалить статью</a>
+</div>
+
+{% endblock header%}
+{% block content %}
+  <div class="post_entry">
+    {% if post.image %}
+    <div class="posts_image">
+      <img src={% if post.image %}{{ post.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}>
+    </div>
+    {% endif %}
+    <div class="posts_title">
+      <h2>{{ post.title }}</h2>
+    </div>
+    <div class="posts_text">
+      <p>{{ post.text }}</p>
+    </div>
+  </div>
+  
+{% endblock content %}

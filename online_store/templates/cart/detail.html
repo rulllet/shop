@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}
+    Корзина
+{% endblock %}
+{% block content %}
+    <h1>Ваша корзина</h1>
+
+    {% for item in cart %}
+    {% with product=item.product %}
+    <div class="card" style="width: 18rem; margin: 20px">
+        <a href="{{ product.get_absolute_url }}">
+            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" class="card-img-top">
+        </a>
+        <div class="card-body" style="margin: 5px">
+            <a href="{{ product.get_absolute_url }}">
+                <h5 class="card-title">{{ product.name }}</h5>
+            </a>
+        </div> 
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Цена за единицу: {{ item.price }} ₽</li>
+            <li class="list-group-item">Колличество: {{ item.quantity }}</li>
+            <li class="list-group-item">Цена по колличеству: {{ item.total_price }} ₽</li>
+            <li class="list-group-item"><a href="{% url "cart:cart_remove" product.id%}">Очистить</a></li>
+        </ul>
+    </div> 
+    {% endwith %}
+    {% endfor %}
+
+        <td class="num">Всего: {{ cart.get_total_price }} ₽</td>
+        <a href="{% url "product_list" %}" class="button light">Продолжить покупки</a>
+        <a href="{% url "orders:order_create" %}" class="button">Создать заказ</a>
+
+{% endblock %}
+
