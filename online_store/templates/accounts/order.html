@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+{% block title %}Заказ №{{order.id}}{% endblock %}
+
+{% block content %}
+<h2>{{user}} {{user.email}}</h2><br>
+
+<h5>Заказ №{{order.id}}</h5> Создан: {{order.created}}<br>
+    ФИО получателя: {{order.first_name}} {{order.last_name}}<br>
+    Адрес: {{order.city}} {{order.address}}<br>
+    {% if order.paid == True%}Оплачен{%else%}Неоплачен{% endif %}<br>
+    {% if order.delivered == True%}Доставлен{%else%}Недоставлен{% endif %}<br>
+
+    {{order.orderitem.product}}  
+    {% for order in order.orderitem_set %}
+        {{order.product.name}}   
+    {% endfor %}
+
+{% endblock content %}
