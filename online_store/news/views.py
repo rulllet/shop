@@ -7,6 +7,7 @@ from .models import Post
 
 
 class BlogListView(ListView):
+    # Отображение всех новостей
     model = Post
     paginate_by = 3
     template_name = 'news/home.html'
@@ -14,10 +15,12 @@ class BlogListView(ListView):
         return '-id'
     
 class BlogDetailView(DetailView): 
+    # Страница с новостью
     model = Post
     template_name = 'news/post_detail.html'
    
 class BlogCreateView(LoginRequiredMixin, CreateView):
+    # Создание новости
     model = Post
     login_url = '/news'
     redirect_field_name = 'redirect_to'
@@ -25,6 +28,7 @@ class BlogCreateView(LoginRequiredMixin, CreateView):
     fields = ['image', 'title', 'author', 'thesis', 'text']
     
 class BlogUpdateView(LoginRequiredMixin, UpdateView):
+    # Редактирование новости
     model = Post
     login_url = '/news'
     redirect_field_name = 'redirect_to'
@@ -32,6 +36,7 @@ class BlogUpdateView(LoginRequiredMixin, UpdateView):
     fields = ['image', 'title', 'thesis', 'text']
     
 class BlogDeleteView(LoginRequiredMixin, DeleteView):
+    # Удаление новости
     model = Post
     login_url = '/news'
     redirect_field_name = 'redirect_to'

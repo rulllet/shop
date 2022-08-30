@@ -5,6 +5,7 @@ from cart.cart import Cart
 from django.shortcuts import redirect
 
 def order_create(request):
+    # Создание заказа
     cart = Cart(request)
     if request.user.is_authenticated == True:
         if request.method == 'POST':

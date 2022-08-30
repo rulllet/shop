@@ -4,7 +4,7 @@ from catalog.models import Product
 
 
 class Cart(object):
-
+    # Логика работы корзины
     def __init__(self, request):
  
         self.session = request.session
@@ -54,6 +54,5 @@ class Cart(object):
                self.cart.values())
         
     def clear(self):
-    # удаление корзины из сессии
         del self.session[settings.CART_SESSION_ID]
         self.session.modified = True

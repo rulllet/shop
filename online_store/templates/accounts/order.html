@@ -10,9 +10,4 @@
     {% if order.paid == True%}Оплачен{%else%}Неоплачен{% endif %}<br>
     {% if order.delivered == True%}Доставлен{%else%}Недоставлен{% endif %}<br>
 
-    {{order.orderitem.product}}  
-    {% for order in order.orderitem_set %}
-        {{order.product.name}}   
-    {% endfor %}
-
 {% endblock content %}

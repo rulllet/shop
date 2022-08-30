@@ -11,16 +11,13 @@
             <div class="col-sm-4">
                 <div class="card bg-light mb-3" style="max-width: 18rem; margin: 5px">
                     <div class="card-body">
-                        <div class="card-header"><h5>Заказ №{{order.id}} </h5></div>
+                        <div class="card-header"><h5><a href="{{ order.id }}">Заказ №{{order.id}} </a></h5></div>
                         <h5 class="card-title">{% if order.delivered == True%}Доставлен{%else%}Недоставлен{% endif %}</h5>
                         <p class="card-text">
                         {% if order.paid == True%}Оплачен{%else%}Неоплачен{% endif %}<br>
                         ФИО получателя: {{order.first_name}} {{order.last_name}}<br>
                         Адрес: {{order.city}} {{order.address}}<br>
                         </p>
-                        {% for i in object_list.orderitem_set.all %}
-                        {{i.product}}
-                        {% endfor %}
                     </div>
                 </div>
             </div>

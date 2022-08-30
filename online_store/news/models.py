@@ -4,6 +4,7 @@ from django.urls import reverse
 
 
 class Post(models.Model):
+    # База для новостей интернет магазина
     date_modified = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='img/%Y/%m/%d', blank=True)
     title = models.CharField(max_length=100)

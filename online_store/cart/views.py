@@ -10,6 +10,7 @@ def shipping (request):
 
 @require_POST
 def cart_add(request, product_id):
+    # Добавление товоров в корзину
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     form = CartAddProductForm(request.POST)
@@ -21,11 +22,13 @@ def cart_add(request, product_id):
     return redirect('cart:cart_detail')
 
 def cart_remove(request, product_id):
+    # Удаление товаров с корзины
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
     return redirect('cart:cart_detail')
 
 def cart_detail(request):
+    # Отображение корзины
     cart = Cart(request)
     return render(request, 'cart/detail.html', {'cart': cart})

@@ -3,6 +3,7 @@ from django.urls import reverse
 
 
 class Category(models.Model):
+    # Категории товаров
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True, unique=True)
     class Meta:
@@ -15,6 +16,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    # База товаров
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
