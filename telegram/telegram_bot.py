@@ -14,12 +14,13 @@ def get_data(url, last_news):
         resp = requests.get(news_data_get)
         try:
             resp = resp.json()
-            resp_id = resp[0]["name"]
+            resp_id = resp[0]["id"]
             
             if resp_id != last_news[-1]:
                 last_news.clear()
                 last_news.append(resp_id)
-                bot.send_message(chat_id, resp[0]['name'] + resp[0]['price'] + '<a href="http://127.0.0.1:8000/apiproduct/">VK</a>',parse_mode="HTML")
+                #bot.send_photo(chat_id, resp[0]['image'])
+                bot.send_message(chat_id, resp[0]['image'], resp[0]['title'] + '\n' + resp[0]['thesis'] + '\n' + '<a href="http://127.0.0.1:8000/news/">Читать далее...</a>',parse_mode="HTML")
                 return resp[0]
             else:
                 return False
@@ -36,7 +37,7 @@ if __name__ == '__main__':
     number_iterations = 0
     
     while True:
-        res = get_data('http://127.0.0.1:8000/apiproduct/', last_news)
+        res = get_data('http://127.0.0.1:8000/apinews-tool/', last_news)
         number_iterations += 1
         if number_iterations % 10 == 0:
             print(res)

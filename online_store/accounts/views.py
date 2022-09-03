@@ -13,7 +13,6 @@ class SignUpView(generic.CreateView):
     success_url = reverse_lazy('login')
     template_name = 'accounts/signup.html'
     
-    
 class AccountView(ListView): 
     # Личный кабинет клиента и отображение всех заказов
     template_name = 'accounts/account.html'
