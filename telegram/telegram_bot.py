@@ -72,7 +72,8 @@ if __name__ == '__main__':
                         edit = edit_data(id_news_telegram[i], get_id_text_edit)
             except:
                 continue
-
         data_save.clear()
         data_save.append(result_json) 
         time.sleep(2)
+
+                
