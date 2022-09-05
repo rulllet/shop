@@ -3,3 +3,4 @@ django-debug-toolbar==3.6.0
 djangorestframework==3.13.1
 Pillow==9.2.0
 pyTelegramBotAPI==4.7.0
+jsondiff==2.0.0
