@@ -7,42 +7,33 @@ import time
 bot = telebot.TeleBot('5127888912:AAEGv8yK5iufHfYoTLzm--ipPGCQxTDIA7Q')
 chat_id = '@testingpypy'
 
-def get_data(url, last_news):
-    
-    try:
-        news_data_get = url
-        resp = requests.get(news_data_get)
-        try:
-            resp = resp.json()
-            resp_id = resp[0]["id"]
-            
-            if resp_id != last_news[-1]:
-                last_news.clear()
-                last_news.append(resp_id)
-                #bot.send_photo(chat_id, resp[0]['image'])
-                bot.send_message(chat_id, resp[0]['image'], resp[0]['title'] + '\n' + resp[0]['thesis'] + '\n' + '<a href="http://127.0.0.1:8000/news/">Читать далее...</a>',parse_mode="HTML")
-                return resp[0]
-            else:
-                return False
+def get_data(url):
+    # Получаем новости по API
+    news_data_get = url
+    resp = requests.get(news_data_get)
+    resp = resp.json()
+    return resp
 
-        except (JSONDecodeError, IndexError, KeyError):
-            print("JSON ERROR")   
-    except Exception :
-        print("ERROR Connection")
+def send_data(result_json):
+    #  отправляем новость в телеграмм
+    bot.send_message(chat_id,  result_json[0]['title'] + '\n' + result_json[0]['thesis'] + '\n' 
+                    + '<a href="http://127.0.0.1:8000/news/">Читать далее...</a>',parse_mode="HTML")
         
         
 if __name__ == '__main__':
 
-    last_news = [' ']
+    id_news_api = [0,]
     number_iterations = 0
     
     while True:
-        res = get_data('http://127.0.0.1:8000/apinews-tool/', last_news)
+        result_json = get_data('http://127.0.0.1:8000/apinews-tool/')
         number_iterations += 1
-        if number_iterations % 10 == 0:
-            print(res)
-            print(number_iterations)
-        elif res != False:
-            print(res)
-            print(number_iterations)
+
+        if  result_json[0]["id"] > int(id_news_api[-1]):
+            number_message = send_data(result_json)
+            id_news_api.append(result_json[0]["id"])
+
+        elif result_json[0]["id"] <= id_news_api[-1]:
+            pass
+                
         time.sleep(2)
