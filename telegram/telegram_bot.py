@@ -1,4 +1,3 @@
-from json.decoder import JSONDecodeError
 import requests
 import telebot
 import time
