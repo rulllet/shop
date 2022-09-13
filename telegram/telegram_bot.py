@@ -4,8 +4,8 @@ import time
 import jsondiff
 
 
-bot = telebot.TeleBot('5127888912:AAEGv8yK5iufHfYoTLzm--ipPGCQxTDIA7Q')
-chat_id = '@testingpypy'
+bot = telebot.TeleBot('токен бота')
+chat_id = 'id публичного канала'
 
 
 def get_data(url):
